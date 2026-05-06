@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "622051623540",
+    "project_id": "bitescan2",
+    "storage_bucket": "bitescan2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622051623540:android:812f0622307268f5e8c721",
+        "android_client_info": {
+          "package_name": "com.example.bite_scan"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA32u0bQdXGW2g-6GiuOaGrec4IUIR1gfw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
