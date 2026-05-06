@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:firebase_vertexai/firebase_vertexai.dart';
+import 'package:firebase_ai/firebase_ai.dart';
 import 'package:flutter/foundation.dart';
 
 class AIService {
@@ -10,8 +10,7 @@ class AIService {
     try {
       // Changed to 'gemini-1.5-flash-latest' as 'gemini-3-flash' does not exist yet.
       // This provides the best balance of speed and image recognition for your app.
-      _model = FirebaseVertexAI.instance.generativeModel(
-        model: 'gemini-1.5-flash-latest',
+      _model = FirebaseAI.googleAI().generativeModel(model: 'gemini-3-flash-preview',
         systemInstruction: Content.system(
           'You are the BiteScan AI assistant. Your ideology is built on two pillars: '
           '1. Safety: Identify household items and alert users if they are expired, recalled, or potentially hazardous. '
@@ -38,7 +37,7 @@ class AIService {
       final prompt = [
         Content.multi([
           TextPart('Analyze this household item based on the BiteScan ideology.'),
-          //DataPart('image/jpeg', bytes),
+          InlineDataPart('image/jpeg', bytes),
         ])
       ];
 
@@ -57,7 +56,7 @@ class AIService {
       final prompt = [
         Content.multi([
           TextPart('Analyze this household item based on the BiteScan ideology.'),
-          //DataPart('image/jpeg', bytes),
+          InlineDataPart('image/jpeg', bytes),
         ])
       ];
 

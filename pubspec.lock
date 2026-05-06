@@ -138,7 +138,7 @@ packages:
     source: hosted
     version: "0.9.3+5"
   firebase_ai:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_ai
       sha256: "0469000e0a364750dc7007834ceb426a7e1868f9df2431e6f71fc9b9f0c011eb"
@@ -217,14 +217,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.6.0"
-  firebase_vertexai:
-    dependency: "direct main"
-    description:
-      name: firebase_vertexai
-      sha256: "67350e68b3738cff99a366c60aeb8d15acdc446848555942ae6f006329690235"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
   flutter:
     dependency: "direct main"
     description: flutter
