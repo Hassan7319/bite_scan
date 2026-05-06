@@ -20,6 +20,8 @@ class _SignupScreenState extends State<SignupScreen> {
   String _selectedGender = 'Male';
   bool _agreeToPolicy = false;
   bool _isLoading = false;
+  bool _obscurePassword = true;
+  bool _obscureConfirmPassword = true;
 
   @override
   void dispose() {
@@ -169,7 +171,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       const Text('Gender', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500)),
                                       const SizedBox(height: 8),
                                       DropdownButtonFormField<String>(
-                                        value: _selectedGender,
+                                        initialValue: _selectedGender,
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
                                           contentPadding: const EdgeInsets.symmetric(horizontal: 12),
@@ -185,9 +187,29 @@ class _SignupScreenState extends State<SignupScreen> {
                               ],
                             ),
                             const SizedBox(height: 16),
-                            _buildTextField('Password', _passwordController, Icons.lock_outline, obscure: true),
+                            _buildTextField(
+                              'Password',
+                              _passwordController,
+                              Icons.lock_outline,
+                              obscure: _obscurePassword,
+                              onToggleVisibility: () {
+                                setState(() {
+                                  _obscurePassword = !_obscurePassword;
+                                });
+                              },
+                            ),
                             const SizedBox(height: 16),
-                            _buildTextField('Confirm Password', _confirmPasswordController, Icons.lock_reset_outlined, obscure: true),
+                            _buildTextField(
+                              'Confirm Password',
+                              _confirmPasswordController,
+                              Icons.lock_reset_outlined,
+                              obscure: _obscureConfirmPassword,
+                              onToggleVisibility: () {
+                                setState(() {
+                                  _obscureConfirmPassword = !_obscureConfirmPassword;
+                                });
+                              },
+                            ),
                             const SizedBox(height: 20),
                             Row(
                               children: [
@@ -254,7 +276,7 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller, IconData icon, {bool obscure = false}) {
+  Widget _buildTextField(String label, TextEditingController controller, IconData icon, {bool obscure = false, VoidCallback? onToggleVisibility}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -266,6 +288,15 @@ class _SignupScreenState extends State<SignupScreen> {
           decoration: InputDecoration(
             hintText: 'Enter your ${label.toLowerCase()}',
             prefixIcon: Icon(icon),
+            suffixIcon: onToggleVisibility != null
+                ? IconButton(
+                    icon: Icon(
+                      obscure ? Icons.visibility_off : Icons.visibility,
+                      color: Colors.grey,
+                    ),
+                    onPressed: onToggleVisibility,
+                  )
+                : null,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
           ),
         ),
