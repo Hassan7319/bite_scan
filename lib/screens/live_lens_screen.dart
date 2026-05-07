@@ -73,7 +73,7 @@ class LiveLensScreen extends StatelessWidget {
                                   Icon(
                                     Icons.filter_center_focus_outlined,
                                     size: 80,
-                                    color: const Color(0xFF00B894).withOpacity(0.3),
+                                    color: const Color(0xFF00B894).withValues(alpha: 0.3),
                                   ),
                                   const SizedBox(height: 24),
                                   Text(
@@ -121,7 +121,7 @@ class LiveLensScreen extends StatelessWidget {
                         child: Text(
                           'QUICK TIPS',
                           style: TextStyle(
-                            color: theme.colorScheme.onSurfaceVariant.withOpacity(0.7),
+                            color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                             letterSpacing: 1.2,
@@ -170,7 +170,7 @@ class LiveLensScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: isDark ? bgColor.withOpacity(0.2) : bgColor,
+              color: isDark ? bgColor.withValues(alpha: 0.2) : bgColor,
               shape: BoxShape.circle,
             ),
             child: Icon(icon, color: isDark ? Colors.white70 : Colors.black87, size: 24),

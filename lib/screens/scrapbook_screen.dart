@@ -79,7 +79,7 @@ class ScrapbookScreen extends StatelessWidget {
                         child: Icon(
                           Icons.lightbulb_outline,
                           size: 64,
-                          color: const Color(0xFF00B894).withOpacity(0.3),
+                          color: const Color(0xFF00B894).withValues(alpha: 0.3),
                         ),
                       ),
                       const SizedBox(height: 32),

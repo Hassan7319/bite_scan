@@ -49,7 +49,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: colorScheme.onSurfaceVariant.withOpacity(0.7),
+                        color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                         letterSpacing: 1.2,
                       ),
                     ),
@@ -83,7 +83,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: colorScheme.onSurfaceVariant.withOpacity(0.7),
+                        color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                         letterSpacing: 1.2,
                       ),
                     ),
@@ -93,7 +93,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       leading: Container(
                         padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
-                          color: const Color(0xFF00B894).withOpacity(0.1),
+                          color: const Color(0xFF00B894).withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Icon(Icons.person_outline, color: Color(0xFF00B894)),
@@ -112,7 +112,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     leading: Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.1),
+                        color: Colors.red.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: const Icon(Icons.logout, color: Colors.red),

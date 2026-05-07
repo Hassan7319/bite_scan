@@ -73,7 +73,7 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
     final isDark = theme.brightness == Brightness.dark;
 
     return Scaffold(
-      backgroundColor: Colors.black.withOpacity(0.5),
+      backgroundColor: Colors.black.withValues(alpha: 0.5),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40),
@@ -84,7 +84,7 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
               borderRadius: BorderRadius.circular(24),
               boxShadow: isDark ? null : [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
@@ -126,9 +126,9 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isDark ? colorScheme.primaryContainer.withOpacity(0.2) : const Color(0xFFF1FDF8),
+        color: isDark ? colorScheme.primaryContainer.withValues(alpha: 0.2) : const Color(0xFFF1FDF8),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: colorScheme.primary.withOpacity(0.2)),
+        border: Border.all(color: colorScheme.primary.withValues(alpha: 0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -216,7 +216,7 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
       width: double.infinity,
       height: 200,
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest.withOpacity(0.3),
+        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
           color: colorScheme.outlineVariant,
@@ -230,7 +230,7 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
                 Icon(
                   Icons.camera_alt_outlined,
                   size: 48,
-                  color: colorScheme.onSurfaceVariant.withOpacity(0.5),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5),
                 ),
                 const SizedBox(height: 12),
                 Text(

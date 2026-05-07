@@ -42,7 +42,7 @@ class AccountDetailsScreen extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 50,
-                        backgroundColor: colorScheme.primary.withOpacity(0.2),
+                        backgroundColor: colorScheme.primary.withValues(alpha: 0.2),
                         child: Icon(Icons.person, size: 50, color: colorScheme.primary),
                       ),
                       const SizedBox(height: 32),
@@ -67,16 +67,16 @@ class AccountDetailsScreen extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isDark ? colorScheme.surfaceContainerHighest : colorScheme.surfaceVariant.withOpacity(0.3),
+        color: isDark ? colorScheme.surfaceContainerHighest : colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: colorScheme.outlineVariant.withOpacity(0.5)),
+        border: Border.all(color: colorScheme.outlineVariant.withValues(alpha: 0.5)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: colorScheme.primary.withOpacity(0.1),
+              color: colorScheme.primary.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(icon, color: colorScheme.primary, size: 22),

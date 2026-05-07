@@ -96,7 +96,7 @@ class SafetyScreen extends StatelessWidget {
                                 child: Icon(
                                   Icons.shield_outlined,
                                   size: 64,
-                                  color: const Color(0xFF00B894).withOpacity(0.3),
+                                  color: const Color(0xFF00B894).withValues(alpha: 0.3),
                                 ),
                               ),
                               const SizedBox(height: 32),
@@ -144,7 +144,7 @@ class SafetyScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: bgColor,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: textColor.withOpacity(0.2)),
+              border: Border.all(color: textColor.withValues(alpha: 0.2)),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -167,7 +167,7 @@ class SafetyScreen extends StatelessWidget {
                     label,
                     style: TextStyle(
                       fontSize: 12,
-                      color: textColor.withOpacity(0.9),
+                      color: textColor.withValues(alpha: 0.9),
                       fontWeight: FontWeight.w500,
                     ),
                   ),

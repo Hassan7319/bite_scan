@@ -179,7 +179,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       const Text('Gender', style: TextStyle(color: onSurfaceVariantColor, fontWeight: FontWeight.w500)),
                                       const SizedBox(height: 8),
                                       DropdownButtonFormField<String>(
-                                        value: _selectedGender,
+                                        initialValue: _selectedGender,
                                         dropdownColor: surfaceColor,
                                         style: const TextStyle(color: onSurfaceColor),
                                         decoration: InputDecoration(

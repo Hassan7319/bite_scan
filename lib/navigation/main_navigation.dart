@@ -43,7 +43,7 @@ class _MainScreenState extends State<MainScreen> {
           color: colorScheme.surface,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(isDark ? 0.2 : 0.05),
+              color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.05),
               blurRadius: 10,
               offset: const Offset(0, -5),
             ),
@@ -58,7 +58,7 @@ class _MainScreenState extends State<MainScreen> {
                 activeIcon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: isDark ? colorScheme.primaryContainer.withOpacity(0.3) : const Color(0xFFE8F8F5),
+                    color: isDark ? colorScheme.primaryContainer.withValues(alpha: 0.3) : const Color(0xFFE8F8F5),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(Icons.fullscreen, color: Color(0xFF00B894)),
@@ -70,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
                 activeIcon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: isDark ? colorScheme.primaryContainer.withOpacity(0.3) : const Color(0xFFE8F8F5),
+                    color: isDark ? colorScheme.primaryContainer.withValues(alpha: 0.3) : const Color(0xFFE8F8F5),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(Icons.bookmark_added, color: Color(0xFF00B894)),
@@ -82,7 +82,7 @@ class _MainScreenState extends State<MainScreen> {
                 activeIcon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: isDark ? colorScheme.primaryContainer.withOpacity(0.3) : const Color(0xFFE8F8F5),
+                    color: isDark ? colorScheme.primaryContainer.withValues(alpha: 0.3) : const Color(0xFFE8F8F5),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(Icons.security, color: Color(0xFF00B894)),
@@ -92,7 +92,7 @@ class _MainScreenState extends State<MainScreen> {
             ],
             currentIndex: _selectedIndex,
             selectedItemColor: const Color(0xFF00B894),
-            unselectedItemColor: colorScheme.onSurfaceVariant.withOpacity(0.6),
+            unselectedItemColor: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
             onTap: _onItemTapped,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
