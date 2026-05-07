@@ -6,10 +6,14 @@ class SafetyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: colorScheme.surface,
         elevation: 0,
         toolbarHeight: 120,
         automaticallyImplyLeading: false,
@@ -31,24 +35,24 @@ class SafetyScreen extends StatelessWidget {
                       child: const Icon(Icons.security, color: Colors.white, size: 28),
                     ),
                     const SizedBox(width: 12),
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Safety',
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF1E272E),
+                          color: colorScheme.onSurface,
                         ),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
-                const Text(
+                Text(
                   'Quick-glance safety overview',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF7F8C8D),
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],
@@ -68,11 +72,11 @@ class SafetyScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                       child: Row(
                         children: [
-                          _buildStatCard(DataManager.expiredCount, 'Expired', const Color(0xFFFFEBEE), const Color(0xFFE74C3C)),
+                          _buildStatCard(context, DataManager.expiredCount, 'Expired', isDark ? Colors.red.shade900 : const Color(0xFFFFEBEE), const Color(0xFFE74C3C)),
                           const SizedBox(width: 8),
-                          _buildStatCard(DataManager.warningCount, 'Warnings', const Color(0xFFFFF3E0), const Color(0xFFF39C12)),
+                          _buildStatCard(context, DataManager.warningCount, 'Warnings', isDark ? Colors.orange.shade900 : const Color(0xFFFFF3E0), const Color(0xFFF39C12)),
                           const SizedBox(width: 8),
-                          _buildStatCard(DataManager.safeCount, 'Safe', const Color(0xFFE8F5E9), const Color(0xFF27AE60)),
+                          _buildStatCard(context, DataManager.safeCount, 'Safe', isDark ? Colors.green.shade900 : const Color(0xFFE8F5E9), const Color(0xFF27AE60)),
                         ],
                       ),
                     ),
@@ -86,7 +90,7 @@ class SafetyScreen extends StatelessWidget {
                               Container(
                                 padding: const EdgeInsets.all(32),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFF1FDF8),
+                                  color: isDark ? colorScheme.surfaceContainerHighest : const Color(0xFFF1FDF8),
                                   borderRadius: BorderRadius.circular(24),
                                 ),
                                 child: Icon(
@@ -96,22 +100,22 @@ class SafetyScreen extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 32),
-                              const Text(
+                              Text(
                                 'Safety Status',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xFF1E272E),
+                                  color: colorScheme.onSurface,
                                 ),
                               ),
                               const SizedBox(height: 12),
-                              const Text(
+                              Text(
                                 'Items you scan will appear here with their safety rating.',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 16,
-                                  color: Color(0xFF7F8C8D),
+                                  color: colorScheme.onSurfaceVariant,
                                   height: 1.5,
                                 ),
                               ),
@@ -130,7 +134,7 @@ class SafetyScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildStatCard(ValueNotifier<int> notifier, String label, Color bgColor, Color textColor) {
+  Widget _buildStatCard(BuildContext context, ValueNotifier<int> notifier, String label, Color bgColor, Color textColor) {
     return Expanded(
       child: ValueListenableBuilder<int>(
         valueListenable: notifier,
@@ -140,7 +144,7 @@ class SafetyScreen extends StatelessWidget {
             decoration: BoxDecoration(
               color: bgColor,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: textColor.withOpacity(0.1)),
+              border: Border.all(color: textColor.withOpacity(0.2)),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -163,7 +167,7 @@ class SafetyScreen extends StatelessWidget {
                     label,
                     style: TextStyle(
                       fontSize: 12,
-                      color: textColor.withOpacity(0.8),
+                      color: textColor.withOpacity(0.9),
                       fontWeight: FontWeight.w500,
                     ),
                   ),

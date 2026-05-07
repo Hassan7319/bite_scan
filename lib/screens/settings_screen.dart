@@ -20,65 +20,70 @@ class _SettingsScreenState extends State<SettingsScreen> {
           valueListenable: UserManager.currentUser,
           builder: (context, userData, child) {
             final theme = Theme.of(context);
+            final colorScheme = theme.colorScheme;
+            
             return Scaffold(
-              backgroundColor: theme.scaffoldBackgroundColor,
+              backgroundColor: colorScheme.surface,
               appBar: AppBar(
-                backgroundColor: theme.scaffoldBackgroundColor,
+                backgroundColor: colorScheme.surface,
                 elevation: 0,
                 title: Text(
                   'Settings',
                   style: TextStyle(
-                    color: theme.textTheme.titleLarge?.color,
+                    color: colorScheme.onSurface,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 leading: IconButton(
-                  icon: Icon(Icons.arrow_back, color: theme.iconTheme.color),
+                  icon: Icon(Icons.arrow_back, color: colorScheme.onSurface),
                   onPressed: () => Navigator.pop(context),
                 ),
               ),
               body: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                     child: Text(
                       'Appearance',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF94A3B8),
+                        color: colorScheme.onSurfaceVariant.withOpacity(0.7),
                         letterSpacing: 1.2,
                       ),
                     ),
                   ),
                   _buildThemeOption(
+                    context: context,
                     title: 'Light Mode',
                     icon: Icons.light_mode_outlined,
                     value: ThemeMode.light,
                     groupValue: currentMode,
                   ),
                   _buildThemeOption(
+                    context: context,
                     title: 'Dark Mode',
                     icon: Icons.dark_mode_outlined,
                     value: ThemeMode.dark,
                     groupValue: currentMode,
                   ),
                   _buildThemeOption(
+                    context: context,
                     title: 'System Default',
                     icon: Icons.settings_brightness_outlined,
                     value: ThemeMode.system,
                     groupValue: currentMode,
                   ),
-                  const Divider(height: 32),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+                  Divider(height: 32, color: colorScheme.outlineVariant),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
                     child: Text(
                       'Account',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF94A3B8),
+                        color: colorScheme.onSurfaceVariant.withOpacity(0.7),
                         letterSpacing: 1.2,
                       ),
                     ),
@@ -93,12 +98,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         child: const Icon(Icons.person_outline, color: Color(0xFF00B894)),
                       ),
-                      title: Text(userData.name),
-                      subtitle: Text(userData.email),
+                      title: Text(userData.name, style: TextStyle(color: colorScheme.onSurface)),
+                      subtitle: Text(userData.email, style: TextStyle(color: colorScheme.onSurfaceVariant)),
+                      onTap: () => Navigator.pushNamed(context, AppRoutes.accountDetails),
                     ),
                   ] else ...[
-                    const ListTile(
-                      title: Text('No user logged in'),
+                    ListTile(
+                      title: Text('No user logged in', style: TextStyle(color: colorScheme.onSurface)),
                     ),
                   ],
                   const SizedBox(height: 8),
@@ -124,18 +130,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget _buildThemeOption({
+    required BuildContext context,
     required String title,
     required IconData icon,
     required ThemeMode value,
     required ThemeMode groupValue,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return RadioListTile<ThemeMode>(
       activeColor: const Color(0xFF00B894),
       title: Row(
         children: [
-          Icon(icon, size: 20, color: const Color(0xFF64748B)),
+          Icon(icon, size: 20, color: colorScheme.onSurfaceVariant),
           const SizedBox(width: 12),
-          Text(title),
+          Text(title, style: TextStyle(color: colorScheme.onSurface)),
         ],
       ),
       value: value,

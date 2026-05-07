@@ -4,10 +4,12 @@ import 'package:bite_scan/routes.dart';
 import 'package:bite_scan/theme_notifier.dart';
 import 'package:bite_scan/user_manager.dart';
 import 'package:bite_scan/ai_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
+  bool showOnboarding = true;
   try {
     await Firebase.initializeApp();
     UserManager.isFirebaseReady = true;
@@ -15,17 +17,21 @@ void main() async {
     // Initialize services
     AIService.initialize();
     await UserManager.initialize();
+
+    final prefs = await SharedPreferences.getInstance();
+    showOnboarding = !(prefs.getBool('onboarding_complete') ?? false);
   } catch (e) {
     UserManager.isFirebaseReady = false;
     UserManager.initializationError = e.toString();
-    debugPrint('Firebase initialization failed: $e');
+    debugPrint('Firebase/Init error: $e');
   }
 
-  runApp(const MyApp());
+  runApp(MyApp(initialRoute: showOnboarding ? AppRoutes.onboarding : AppRoutes.splash));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String initialRoute;
+  const MyApp({super.key, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +54,7 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
           ),
           themeMode: currentMode,
-          initialRoute: AppRoutes.splash,
+          initialRoute: initialRoute,
           routes: AppRoutes.getRoutes(),
         );
       },

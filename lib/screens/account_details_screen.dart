@@ -10,30 +10,40 @@ class AccountDetailsScreen extends StatelessWidget {
       valueListenable: UserManager.currentUser,
       builder: (context, userData, child) {
         final theme = Theme.of(context);
+        final colorScheme = theme.colorScheme;
+        
         return Scaffold(
-          backgroundColor: theme.scaffoldBackgroundColor,
+          backgroundColor: colorScheme.surface,
           appBar: AppBar(
-            backgroundColor: theme.scaffoldBackgroundColor,
+            backgroundColor: colorScheme.surface,
             elevation: 0,
-            title: const Text(
+            title: Text(
               'Account Details',
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: colorScheme.onSurface,
+              ),
             ),
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
+              icon: Icon(Icons.arrow_back, color: colorScheme.onSurface),
               onPressed: () => Navigator.pop(context),
             ),
           ),
           body: userData == null
-              ? const Center(child: Text('No user data found'))
+              ? Center(
+                  child: Text(
+                    'No user data found',
+                    style: TextStyle(color: colorScheme.onSurface),
+                  ),
+                )
               : SingleChildScrollView(
                   padding: const EdgeInsets.all(24),
                   child: Column(
                     children: [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 50,
-                        backgroundColor: Color(0xFF00B894),
-                        child: Icon(Icons.person, size: 50, color: Colors.white),
+                        backgroundColor: colorScheme.primary.withOpacity(0.2),
+                        child: Icon(Icons.person, size: 50, color: colorScheme.primary),
                       ),
                       const SizedBox(height: 32),
                       _buildDetailItem(context, 'Full Name', userData.name, Icons.person_outline),
@@ -49,40 +59,52 @@ class AccountDetailsScreen extends StatelessWidget {
   }
 
   Widget _buildDetailItem(BuildContext context, String label, String value, IconData icon) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).brightness == Brightness.dark 
-            ? Colors.white.withOpacity(0.05) 
-            : Colors.grey[50],
+        color: isDark ? colorScheme.surfaceContainerHighest : colorScheme.surfaceVariant.withOpacity(0.3),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.withOpacity(0.1)),
+        border: Border.all(color: colorScheme.outlineVariant.withOpacity(0.5)),
       ),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: const Color(0xFF00B894).withOpacity(0.1),
+              color: colorScheme.primary.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(icon, color: const Color(0xFF00B894), size: 22),
+            child: Icon(icon, color: colorScheme.primary, size: 22),
           ),
           const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: const TextStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                value,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 12, 
+                    color: colorScheme.onSurfaceVariant, 
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  value,
+                  style: TextStyle(
+                    fontSize: 16, 
+                    fontWeight: FontWeight.bold,
+                    color: colorScheme.onSurface,
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

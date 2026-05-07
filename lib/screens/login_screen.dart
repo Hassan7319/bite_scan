@@ -106,8 +106,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Fixed colors for a consistent look regardless of system theme
+    const backgroundColor = Color(0xFF1A233A);
+    const surfaceColor = Colors.white;
+    const primaryColor = Color(0xFF00B894);
+    const onSurfaceColor = Color(0xFF1A233A);
+    const onSurfaceVariantColor = Colors.grey;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF1A233A),
+      backgroundColor: backgroundColor,
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
@@ -119,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Container(
                       height: constraints.maxHeight * 0.35,
                       width: double.infinity,
-                      color: const Color(0xFF1A233A),
+                      color: backgroundColor,
                       child: Center(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -152,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 40),
                         decoration: const BoxDecoration(
-                          color: Colors.white,
+                          color: surfaceColor,
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(40),
                             topRight: Radius.circular(40),
@@ -161,30 +168,34 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text('Email', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500)),
+                            const Text('Email', style: TextStyle(color: onSurfaceVariantColor, fontWeight: FontWeight.w500)),
                             const SizedBox(height: 8),
                             TextField(
                               controller: _emailController,
                               keyboardType: TextInputType.emailAddress,
+                              style: const TextStyle(color: onSurfaceColor),
                               decoration: InputDecoration(
                                 hintText: 'Enter your email',
-                                prefixIcon: const Icon(Icons.email_outlined),
+                                hintStyle: const TextStyle(color: onSurfaceVariantColor),
+                                prefixIcon: const Icon(Icons.email_outlined, color: onSurfaceVariantColor),
                                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
                               ),
                             ),
                             const SizedBox(height: 24),
-                            const Text('Password', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500)),
+                            const Text('Password', style: TextStyle(color: onSurfaceVariantColor, fontWeight: FontWeight.w500)),
                             const SizedBox(height: 8),
                             TextField(
                               controller: _passwordController,
                               obscureText: _obscurePassword,
+                              style: const TextStyle(color: onSurfaceColor),
                               decoration: InputDecoration(
                                 hintText: 'Enter your password',
-                                prefixIcon: const Icon(Icons.lock_outline),
+                                hintStyle: const TextStyle(color: onSurfaceVariantColor),
+                                prefixIcon: const Icon(Icons.lock_outline, color: onSurfaceVariantColor),
                                 suffixIcon: IconButton(
                                   icon: Icon(
                                     _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                                    color: Colors.grey,
+                                    color: onSurfaceVariantColor,
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -202,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: const Text(
                                   'Forgot Password?',
                                   style: TextStyle(
-                                    color: Color(0xFF00B894),
+                                    color: primaryColor,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -215,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               child: ElevatedButton(
                                 onPressed: _isLoading ? null : _handleLogin,
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF00B894),
+                                  backgroundColor: primaryColor,
                                   foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                                 ),
@@ -242,12 +253,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: RichText(
                                   text: const TextSpan(
                                     text: "Don't have an account? ",
-                                    style: TextStyle(color: Colors.black54),
+                                    style: TextStyle(color: onSurfaceVariantColor),
                                     children: [
                                       TextSpan(
                                         text: 'Signup',
                                         style: TextStyle(
-                                          color: Color(0xFF00B894),
+                                          color: primaryColor,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),

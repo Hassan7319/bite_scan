@@ -27,7 +27,12 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       body: IndexedStack(
         index: _selectedIndex,
         children: _screens,
@@ -35,10 +40,10 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: colorScheme.surface,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withOpacity(isDark ? 0.2 : 0.05),
               blurRadius: 10,
               offset: const Offset(0, -5),
             ),
@@ -53,7 +58,7 @@ class _MainScreenState extends State<MainScreen> {
                 activeIcon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE8F8F5),
+                    color: isDark ? colorScheme.primaryContainer.withOpacity(0.3) : const Color(0xFFE8F8F5),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(Icons.fullscreen, color: Color(0xFF00B894)),
@@ -65,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
                 activeIcon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE8F8F5),
+                    color: isDark ? colorScheme.primaryContainer.withOpacity(0.3) : const Color(0xFFE8F8F5),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(Icons.bookmark_added, color: Color(0xFF00B894)),
@@ -77,7 +82,7 @@ class _MainScreenState extends State<MainScreen> {
                 activeIcon: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE8F8F5),
+                    color: isDark ? colorScheme.primaryContainer.withOpacity(0.3) : const Color(0xFFE8F8F5),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Icon(Icons.security, color: Color(0xFF00B894)),
@@ -87,11 +92,11 @@ class _MainScreenState extends State<MainScreen> {
             ],
             currentIndex: _selectedIndex,
             selectedItemColor: const Color(0xFF00B894),
-            unselectedItemColor: Colors.grey,
+            unselectedItemColor: colorScheme.onSurfaceVariant.withOpacity(0.6),
             onTap: _onItemTapped,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.white,
+            backgroundColor: colorScheme.surface,
             elevation: 0,
             selectedFontSize: 12,
             unselectedFontSize: 12,

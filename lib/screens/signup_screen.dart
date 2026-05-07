@@ -41,11 +41,10 @@ class _SignupScreenState extends State<SignupScreen> {
       lastDate: DateTime.now(),
       builder: (context, child) {
         return Theme(
-          data: Theme.of(context).copyWith(
+          data: ThemeData.light().copyWith(
             colorScheme: const ColorScheme.light(
               primary: Color(0xFF00B894),
               onPrimary: Colors.white,
-              onSurface: Color(0xFF1A233A),
             ),
           ),
           child: child!,
@@ -106,8 +105,15 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Fixed colors for a consistent look
+    const backgroundColor = Color(0xFF1A233A);
+    const surfaceColor = Colors.white;
+    const primaryColor = Color(0xFF00B894);
+    const onSurfaceColor = Color(0xFF1A233A);
+    const onSurfaceVariantColor = Colors.grey;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF1A233A),
+      backgroundColor: backgroundColor,
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
@@ -119,7 +125,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     Container(
                       height: constraints.maxHeight * 0.15,
                       width: double.infinity,
-                      color: const Color(0xFF1A233A),
+                      color: backgroundColor,
                       child: const Center(
                         child: Text(
                           'CREATE ACCOUNT',
@@ -132,15 +138,15 @@ class _SignupScreenState extends State<SignupScreen> {
                         width: double.infinity,
                         padding: const EdgeInsets.all(32),
                         decoration: const BoxDecoration(
-                          color: Colors.white,
+                          color: surfaceColor,
                           borderRadius: BorderRadius.only(topLeft: Radius.circular(40), topRight: Radius.circular(40)),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _buildTextField('Full Name', _nameController, Icons.person_outline),
+                            _buildTextField('Full Name', _nameController, Icons.person_outline, onSurfaceColor, onSurfaceVariantColor),
                             const SizedBox(height: 16),
-                            _buildTextField('Email', _emailController, Icons.email_outlined),
+                            _buildTextField('Email', _emailController, Icons.email_outlined, onSurfaceColor, onSurfaceVariantColor),
                             const SizedBox(height: 16),
                             Row(
                               children: [
@@ -148,15 +154,17 @@ class _SignupScreenState extends State<SignupScreen> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      const Text('Date of Birth', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500)),
+                                      const Text('Date of Birth', style: TextStyle(color: onSurfaceVariantColor, fontWeight: FontWeight.w500)),
                                       const SizedBox(height: 8),
                                       TextField(
                                         controller: _dobController,
                                         readOnly: true,
                                         onTap: _selectDate,
+                                        style: const TextStyle(color: onSurfaceColor),
                                         decoration: InputDecoration(
                                           hintText: 'Select date',
-                                          prefixIcon: const Icon(Icons.calendar_today_outlined),
+                                          hintStyle: const TextStyle(color: onSurfaceVariantColor),
+                                          prefixIcon: const Icon(Icons.calendar_today_outlined, color: onSurfaceVariantColor),
                                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
                                         ),
                                       ),
@@ -168,16 +176,21 @@ class _SignupScreenState extends State<SignupScreen> {
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      const Text('Gender', style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500)),
+                                      const Text('Gender', style: TextStyle(color: onSurfaceVariantColor, fontWeight: FontWeight.w500)),
                                       const SizedBox(height: 8),
                                       DropdownButtonFormField<String>(
-                                        initialValue: _selectedGender,
+                                        value: _selectedGender,
+                                        dropdownColor: surfaceColor,
+                                        style: const TextStyle(color: onSurfaceColor),
                                         decoration: InputDecoration(
                                           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
                                           contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                                         ),
                                         items: ['Male', 'Female', 'Other'].map((String value) {
-                                          return DropdownMenuItem<String>(value: value, child: Text(value));
+                                          return DropdownMenuItem<String>(
+                                            value: value, 
+                                            child: Text(value, style: const TextStyle(color: onSurfaceColor)),
+                                          );
                                         }).toList(),
                                         onChanged: (newValue) => setState(() => _selectedGender = newValue!),
                                       ),
@@ -191,6 +204,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               'Password',
                               _passwordController,
                               Icons.lock_outline,
+                              onSurfaceColor,
+                              onSurfaceVariantColor,
                               obscure: _obscurePassword,
                               onToggleVisibility: () {
                                 setState(() {
@@ -203,6 +218,8 @@ class _SignupScreenState extends State<SignupScreen> {
                               'Confirm Password',
                               _confirmPasswordController,
                               Icons.lock_reset_outlined,
+                              onSurfaceColor,
+                              onSurfaceVariantColor,
                               obscure: _obscureConfirmPassword,
                               onToggleVisibility: () {
                                 setState(() {
@@ -215,13 +232,15 @@ class _SignupScreenState extends State<SignupScreen> {
                               children: [
                                 Checkbox(
                                   value: _agreeToPolicy,
-                                  activeColor: const Color(0xFF00B894),
+                                  activeColor: primaryColor,
+                                  checkColor: Colors.white,
+                                  side: const BorderSide(color: onSurfaceVariantColor),
                                   onChanged: (value) => setState(() => _agreeToPolicy = value!),
                                 ),
                                 const Expanded(
                                   child: Text(
                                     'I have read and I agree to the Privacy Policy',
-                                    style: TextStyle(fontSize: 12, color: Colors.black54),
+                                    style: TextStyle(fontSize: 12, color: onSurfaceVariantColor),
                                   ),
                                 ),
                               ],
@@ -233,7 +252,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               child: ElevatedButton(
                                 onPressed: _isLoading ? null : _handleSignup,
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF00B894),
+                                  backgroundColor: primaryColor,
                                   foregroundColor: Colors.white,
                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                                 ),
@@ -254,9 +273,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                 child: RichText(
                                   text: const TextSpan(
                                     text: "Already have an account? ",
-                                    style: TextStyle(color: Colors.black54),
+                                    style: TextStyle(color: onSurfaceVariantColor),
                                     children: [
-                                      TextSpan(text: 'Login', style: TextStyle(color: Color(0xFF00B894), fontWeight: FontWeight.bold)),
+                                      TextSpan(text: 'Login', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
                                     ],
                                   ),
                                 ),
@@ -276,23 +295,25 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  Widget _buildTextField(String label, TextEditingController controller, IconData icon, {bool obscure = false, VoidCallback? onToggleVisibility}) {
+  Widget _buildTextField(String label, TextEditingController controller, IconData icon, Color onSurfaceColor, Color onSurfaceVariantColor, {bool obscure = false, VoidCallback? onToggleVisibility}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w500)),
+        Text(label, style: TextStyle(color: onSurfaceVariantColor, fontWeight: FontWeight.w500)),
         const SizedBox(height: 8),
         TextField(
           controller: controller,
           obscureText: obscure,
+          style: TextStyle(color: onSurfaceColor),
           decoration: InputDecoration(
             hintText: 'Enter your ${label.toLowerCase()}',
-            prefixIcon: Icon(icon),
+            hintStyle: TextStyle(color: onSurfaceVariantColor),
+            prefixIcon: Icon(icon, color: onSurfaceVariantColor),
             suffixIcon: onToggleVisibility != null
                 ? IconButton(
                     icon: Icon(
                       obscure ? Icons.visibility_off : Icons.visibility,
-                      color: Colors.grey,
+                      color: onSurfaceVariantColor,
                     ),
                     onPressed: onToggleVisibility,
                   )

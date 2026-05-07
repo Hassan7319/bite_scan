@@ -5,10 +5,14 @@ class ScrapbookScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: colorScheme.surface,
         elevation: 0,
         toolbarHeight: 120,
         automaticallyImplyLeading: false,
@@ -30,24 +34,24 @@ class ScrapbookScreen extends StatelessWidget {
                       child: const Icon(Icons.bookmark_added_outlined, color: Colors.white, size: 28),
                     ),
                     const SizedBox(width: 12),
-                    const Expanded(
+                    Expanded(
                       child: Text(
                         'Scrapbook',
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF1E272E),
+                          color: colorScheme.onSurface,
                         ),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 8),
-                const Text(
+                Text(
                   'Your saved upcycling ideas & hacks',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF7F8C8D),
+                    color: colorScheme.onSurfaceVariant,
                   ),
                 ),
               ],
@@ -69,7 +73,7 @@ class ScrapbookScreen extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(32),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFF1FDF8),
+                          color: isDark ? colorScheme.surfaceContainerHighest : const Color(0xFFF1FDF8),
                           borderRadius: BorderRadius.circular(24),
                         ),
                         child: Icon(
@@ -79,22 +83,22 @@ class ScrapbookScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 32),
-                      const Text(
+                      Text(
                         'No ideas yet',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF1E272E),
+                          color: colorScheme.onSurface,
                         ),
                       ),
                       const SizedBox(height: 12),
-                      const Text(
+                      Text(
                         'Scan household items to discover creative upcycling hacks. They\'ll appear here automatically!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16,
-                          color: Color(0xFF7F8C8D),
+                          color: colorScheme.onSurfaceVariant,
                           height: 1.5,
                         ),
                       ),

@@ -68,6 +68,10 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
       backgroundColor: Colors.black.withOpacity(0.5),
       body: Center(
@@ -76,24 +80,31 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
           child: Container(
             constraints: const BoxConstraints(maxWidth: 500),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: colorScheme.surface,
               borderRadius: BorderRadius.circular(24),
+              boxShadow: isDark ? null : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildHeader(),
-                  const Divider(height: 1),
+                  _buildHeader(context),
+                  Divider(height: 1, color: colorScheme.outlineVariant),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
                       children: [
-                        _buildImagePlaceholder(),
+                        _buildImagePlaceholder(context),
                         const SizedBox(height: 20),
-                        if (_aiResponse != null) _buildAIResponse(),
+                        if (_aiResponse != null) _buildAIResponse(context),
                         const SizedBox(height: 20),
-                        _buildButtons(),
+                        _buildButtons(context),
                       ],
                     ),
                   ),
@@ -106,26 +117,30 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
     );
   }
 
-  Widget _buildAIResponse() {
+  Widget _buildAIResponse(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFF1FDF8),
+        color: isDark ? colorScheme.primaryContainer.withOpacity(0.2) : const Color(0xFFF1FDF8),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFF00B894).withOpacity(0.2)),
+        border: Border.all(color: colorScheme.primary.withOpacity(0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const Icon(Icons.auto_awesome, color: Color(0xFF00B894), size: 18),
+              Icon(Icons.auto_awesome, color: colorScheme.primary, size: 18),
               const SizedBox(width: 8),
-              const Text(
+              Text(
                 'BITESCAN AI',
                 style: TextStyle(
-                  color: Color(0xFF00B894),
+                  color: colorScheme.primary,
                   fontWeight: FontWeight.bold,
                   fontSize: 12,
                   letterSpacing: 1.1,
@@ -136,9 +151,9 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
           const SizedBox(height: 12),
           Text(
             _aiResponse!,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
-              color: Color(0xFF1E272E),
+              color: colorScheme.onSurface,
               height: 1.5,
             ),
           ),
@@ -147,41 +162,45 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
     );
   }
 
-  Widget _buildButtons() {
+  Widget _buildButtons(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    
     if (_isAnalyzing) {
-      return const Column(
+      return Column(
         children: [
-          CircularProgressIndicator(color: Color(0xFF00B894)),
-          SizedBox(height: 12),
-          Text('AI is analyzing...', style: TextStyle(color: Colors.grey)),
+          CircularProgressIndicator(color: colorScheme.primary),
+          const SizedBox(height: 12),
+          Text('AI is analyzing...', style: TextStyle(color: colorScheme.onSurfaceVariant)),
         ],
       );
     }
 
     if (_pickedFile == null) {
-      return _buildInitialButtons();
+      return _buildInitialButtons(context);
     }
 
-    return _buildActionButtons();
+    return _buildActionButtons(context);
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
+          Text(
             'Capture Item',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF1E272E),
+              color: colorScheme.onSurface,
             ),
           ),
           IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.close, color: Colors.grey, size: 20),
+            icon: Icon(Icons.close, color: colorScheme.onSurfaceVariant, size: 20),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(),
           ),
@@ -190,15 +209,17 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
     );
   }
 
-  Widget _buildImagePlaceholder() {
+  Widget _buildImagePlaceholder(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Container(
       width: double.infinity,
       height: 200,
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFB),
+        color: colorScheme.surfaceContainerHighest.withOpacity(0.3),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: const Color(0xFFE2E8F0),
+          color: colorScheme.outlineVariant,
           style: _pickedFile == null ? BorderStyle.solid : BorderStyle.none,
         ),
       ),
@@ -209,13 +230,13 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
                 Icon(
                   Icons.camera_alt_outlined,
                   size: 48,
-                  color: const Color(0xFF94A3B8).withOpacity(0.5),
+                  color: colorScheme.onSurfaceVariant.withOpacity(0.5),
                 ),
                 const SizedBox(height: 12),
-                const Text(
+                Text(
                   'No image selected',
                   style: TextStyle(
-                    color: Color(0xFF94A3B8),
+                    color: colorScheme.onSurfaceVariant,
                     fontSize: 14,
                   ),
                 ),
@@ -236,7 +257,9 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
     );
   }
 
-  Widget _buildInitialButtons() {
+  Widget _buildInitialButtons(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
         Expanded(
@@ -245,8 +268,8 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
             icon: const Icon(Icons.camera_alt, size: 18),
             label: const Text('Take Photo'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF2563EB),
-              foregroundColor: Colors.white,
+              backgroundColor: colorScheme.primary,
+              foregroundColor: colorScheme.onPrimary,
               padding: const EdgeInsets.symmetric(vertical: 12),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               elevation: 0,
@@ -260,8 +283,8 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
             icon: const Icon(Icons.upload, size: 18),
             label: const Text('Upload'),
             style: OutlinedButton.styleFrom(
-              foregroundColor: const Color(0xFF64748B),
-              side: const BorderSide(color: Color(0xFFE2E8F0)),
+              foregroundColor: colorScheme.onSurfaceVariant,
+              side: BorderSide(color: colorScheme.outlineVariant),
               padding: const EdgeInsets.symmetric(vertical: 12),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),
@@ -271,7 +294,9 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
     );
   }
 
-  Widget _buildActionButtons() {
+  Widget _buildActionButtons(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       children: [
         Expanded(
@@ -281,8 +306,8 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
               _aiResponse = null;
             }),
             style: OutlinedButton.styleFrom(
-              foregroundColor: const Color(0xFF64748B),
-              side: const BorderSide(color: Color(0xFFE2E8F0)),
+              foregroundColor: colorScheme.onSurfaceVariant,
+              side: BorderSide(color: colorScheme.outlineVariant),
               padding: const EdgeInsets.symmetric(vertical: 12),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),
@@ -294,8 +319,8 @@ class _CaptureItemScreenState extends State<CaptureItemScreen> {
           child: ElevatedButton(
             onPressed: _aiResponse != null ? null : _handleAnalyze,
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF059669),
-              foregroundColor: Colors.white,
+              backgroundColor: colorScheme.primary,
+              foregroundColor: colorScheme.onPrimary,
               padding: const EdgeInsets.symmetric(vertical: 12),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
               elevation: 0,

@@ -7,10 +7,13 @@ class LiveLensScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: theme.colorScheme.surface,
         elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -22,17 +25,17 @@ class LiveLensScreen extends StatelessWidget {
             child: const Icon(Icons.auto_awesome, color: Colors.white, size: 20),
           ),
         ),
-        title: const Text(
+        title: Text(
           'Household Shortcut',
           style: TextStyle(
-            color: Color(0xFF1E272E),
+            color: theme.colorScheme.onSurface,
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings_outlined, color: Colors.grey),
+            icon: Icon(Icons.settings_outlined, color: theme.colorScheme.onSurfaceVariant),
             onPressed: () {
               Navigator.pushNamed(context, AppRoutes.settings);
             },
@@ -54,7 +57,7 @@ class LiveLensScreen extends StatelessWidget {
                         child: Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: const Color(0xFFF1FDF8),
+                            color: isDark ? theme.colorScheme.surfaceContainerHighest : const Color(0xFFF1FDF8),
                             borderRadius: BorderRadius.circular(24),
                           ),
                           child: Stack(
@@ -73,11 +76,11 @@ class LiveLensScreen extends StatelessWidget {
                                     color: const Color(0xFF00B894).withOpacity(0.3),
                                   ),
                                   const SizedBox(height: 24),
-                                  const Text(
+                                  Text(
                                     'Position item in frame',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Color(0xFF7F8C8D),
+                                      color: theme.colorScheme.onSurfaceVariant,
                                       fontSize: 16,
                                     ),
                                   ),
@@ -111,14 +114,14 @@ class LiveLensScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 24.0),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'QUICK TIPS',
                           style: TextStyle(
-                            color: Color(0xFF94A3B8),
+                            color: theme.colorScheme.onSurfaceVariant.withOpacity(0.7),
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                             letterSpacing: 1.2,
@@ -131,11 +134,11 @@ class LiveLensScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
                       child: Row(
                         children: [
-                          Expanded(child: _buildTipCard(Icons.camera_alt_outlined, 'Clear photo', const Color(0xFFE2F0D9))),
+                          Expanded(child: _buildTipCard(context, Icons.camera_alt_outlined, 'Clear photo', const Color(0xFFE2F0D9))),
                           const SizedBox(width: 8),
-                          Expanded(child: _buildTipCard(Icons.lightbulb_outline, 'Good light', const Color(0xFFFEF9E7))),
+                          Expanded(child: _buildTipCard(context, Icons.lightbulb_outline, 'Good light', const Color(0xFFFEF9E7))),
                           const SizedBox(width: 8),
-                          Expanded(child: _buildTipCard(Icons.track_changes, 'Fill frame', const Color(0xFFFADBD8))),
+                          Expanded(child: _buildTipCard(context, Icons.track_changes, 'Fill frame', const Color(0xFFFADBD8))),
                         ],
                       ),
                     ),
@@ -150,13 +153,16 @@ class LiveLensScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTipCard(IconData icon, String label, Color bgColor) {
+  Widget _buildTipCard(BuildContext context, IconData icon, String label, Color bgColor) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 4),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.shade100),
+        border: Border.all(color: theme.colorScheme.outlineVariant),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -164,16 +170,16 @@ class LiveLensScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: bgColor,
+              color: isDark ? bgColor.withOpacity(0.2) : bgColor,
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: Colors.black87, size: 24),
+            child: Icon(icon, color: isDark ? Colors.white70 : Colors.black87, size: 24),
           ),
           const SizedBox(height: 8),
           Text(
             label,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 10, color: Color(0xFF64748B)),
+            style: TextStyle(fontSize: 10, color: theme.colorScheme.onSurfaceVariant),
           ),
         ],
       ),
